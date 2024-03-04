@@ -7,11 +7,7 @@ class Student:
 
     # method to return student grade
     def get_grade(self):
-        return f"{self.name} got {self.grade}"
-
-    # method to get average grade
-    def get_average_grade(self):
-        pass
+        return self.grade
 
 
 class Course:
@@ -24,8 +20,15 @@ class Course:
         # Test that there is room in the course
         if len(self.students) < self.max_students:
             self.students.append(student)
-            return False
-        return True
+            return True
+        return False
+
+    # method to get average grade
+    def get_average_grade(self):
+        total = 0
+        for student in self.students:
+            total += student.get_grade()
+        return total / len(self.students)
 
 
 # Instantiate 3 student objects
@@ -38,12 +41,15 @@ s3 = Student(name="Jill", age=19, grade=65)
 # print(Student.get_grade(s3))
 
 # instantiate course subject
-course1 = Course(name="Computer Science", max_students=2)
+course1 = Course(name="Computer Science", max_students=3)
 
 course1.add_student(s1)
 course1.add_student(s2)
-# course1.add_student(s3)
+course1.add_student(s3)
 
 # confirm entry of students
 for student in course1.students:
-    print(student.name)
+    print(f"{student.name} aged {student.age} got a grade of {student.grade}")
+
+# get the average grade of all students
+print(f"The average grade in {course1.name} is {course1.get_average_grade().__round__(2)} ")
